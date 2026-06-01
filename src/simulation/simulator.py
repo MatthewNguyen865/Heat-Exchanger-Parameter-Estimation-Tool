@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.integrate import solve_ivp
-from heat_exchanger_model import heat_exchanger_odes
+from src.model.heat_exchanger_model import heat_exchanger_odes
 
 def simulate_heat_exchanger(mh, mc, Cph, Cpc, UA, y0, t_span, t_eval):
 
