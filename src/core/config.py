@@ -27,6 +27,9 @@ random_seed = 42
 # Estimation Settings
 UA_initial = 300.0
 
+UA_lower_bound = 1.0
+UA_upper_bound = 5000.0
+
 # Output Directories
 PLOTS_DIR = "results/plots"
 DATA_DIR = "results/data"
