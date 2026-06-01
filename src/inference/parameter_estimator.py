@@ -1,4 +1,3 @@
-import numpy as np
 from scipy.optimize import minimize
 from src.inference.objective_function import objective_function
 
