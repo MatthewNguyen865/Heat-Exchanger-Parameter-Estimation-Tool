@@ -12,11 +12,14 @@ from src.core.config import (
     noise_std,
     random_seed,
     UA_initial,
-    ESTIMATION_PLOT)
+    ESTIMATION_PLOT,
+    ESTIMATION_DATA)
 from src.experiments.synthetic_data import generate_clean_data, add_noise
 from src.inference.parameter_estimator import estimate_UA
 from src.simulation.simulator import simulate_heat_exchanger
 from src.analysis.plotting import plot_estimation_results
+from src.analysis.metrics import percent_error
+from src.utils.data_export import save_results
 
 def main():
 
@@ -80,11 +83,19 @@ def main():
     print(f"True UA      : {UA_true:.2f} W/K")
     print(f"Estimated UA : {UA_est:.2f} W/K")
 
-    percent_error = abs(
-        (UA_est - UA_true) / UA_true
-    ) * 100
+    error = percent_error(
+    UA_true,
+    UA_est
+    )
 
-    print(f"Percent Error: {percent_error:.2f}%")
+    save_results(
+    ESTIMATION_DATA,
+    UA_true,
+    UA_est,
+    error
+    )
+
+    print(f"Percent Error: {error:.2f}%")
 
     # Plot Results
     plot_estimation_results(
