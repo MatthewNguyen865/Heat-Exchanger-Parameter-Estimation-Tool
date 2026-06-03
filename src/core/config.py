@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 # Physical Parameters
 mh = 10.0
@@ -19,6 +20,9 @@ y0 = [Th0, Tc0]
 t_start = 0
 t_end = 2000
 n_points = 100
+
+t_span = (t_start, t_end)
+t_eval = np.linspace(t_start, t_end, n_points)
 
 # Synthetic Data Settings
 noise_std = 0.5
@@ -44,4 +48,12 @@ ESTIMATION_PLOT = (
 
 ESTIMATION_DATA = (
     f"{DATA_DIR}/parameter_estimation_results.csv"
+)
+
+NOISE_SENSITIVITY_PLOT = (
+    f"{PLOTS_DIR}/noise_sensitivity_study.png"
+)
+
+NOISE_SENSITIVITY_DATA = (
+    f"{DATA_DIR}/noise_sensitivity_study.csv"
 )

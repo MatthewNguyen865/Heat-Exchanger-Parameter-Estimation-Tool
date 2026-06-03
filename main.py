@@ -6,9 +6,8 @@ from src.core.config import (
     Cpc,
     UA_true,
     y0,
-    t_start,
-    t_end,
-    n_points,
+    t_span,
+    t_eval,
     noise_std,
     random_seed,
     UA_initial,
@@ -20,12 +19,9 @@ from src.simulation.simulator import simulate_heat_exchanger
 from src.analysis.plotting import plot_estimation_results
 from src.analysis.metrics import percent_error
 from src.utils.data_export import save_results
+from examples.noise_sensitivity_study import run_noise_sensitivity_study
 
 def main():
-
-    # Time Grid
-    t_span = (t_start, t_end)
-    t_eval = np.linspace(t_start, t_end, n_points)
 
     # Generate Clean Data
     time, Th_true, Tc_true = generate_clean_data(
@@ -108,6 +104,8 @@ def main():
         Tc_est,
         filename=ESTIMATION_PLOT
     )
+
+    run_noise_sensitivity_study()
 
 if __name__ == "__main__":
     main()

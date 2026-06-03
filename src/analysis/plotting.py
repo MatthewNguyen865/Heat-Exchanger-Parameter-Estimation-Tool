@@ -1,6 +1,26 @@
 import os
 import matplotlib.pyplot as plt
 
+def set_plotting_style():
+    """
+    Apply a consistent plotting style
+    across the project.
+    """
+
+    plt.style.use("default")
+
+    plt.rcParams["figure.figsize"] = (8, 5)
+
+    plt.rcParams["axes.grid"] = True
+
+    plt.rcParams["font.size"] = 11
+
+    plt.rcParams["axes.titlesize"] = 14
+
+    plt.rcParams["axes.labelsize"] = 12
+
+    plt.rcParams["legend.fontsize"] = 10
+
 
 def plot_estimation_results(
     time,
@@ -13,6 +33,7 @@ def plot_estimation_results(
     filename=None
     ):
     
+    set_plotting_style()
     plt.figure(figsize=(10, 6))
 
     # True temperature profiles
@@ -39,5 +60,39 @@ def plot_estimation_results(
     if filename is not None:
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         plt.savefig(filename, dpi=300, bbox_inches="tight")
+
+    plt.show()
+
+
+def plot_noise_sensitivity(
+    noise_levels,
+    percent_errors,
+    filename=None
+):
+    """
+    Plot noise level vs parameter estimation error.
+    """
+
+    set_plotting_style()
+    plt.figure()
+
+    plt.plot(
+        noise_levels,
+        percent_errors,
+        marker="o"
+    )
+
+    plt.xlabel("Noise Standard Deviation (°C)")
+    plt.ylabel("Percent Error (%)")
+    plt.title("Noise Sensitivity Study")
+
+    plt.grid(True)
+
+    if filename is not None:
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+        plt.savefig(filename)
 
     plt.show()
