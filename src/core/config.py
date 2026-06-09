@@ -28,6 +28,11 @@ t_eval = np.linspace(t_start, t_end, n_points)
 noise_std = 0.5
 random_seed = 42
 
+# Monte Carlo Settings
+MONTE_CARLO_TRIALS = 100
+MONTE_CARLO_NOISE_STD = 1.0
+MONTE_CARLO_SEED = 42
+
 # Estimation Settings
 UA_initial = 300.0
 
@@ -56,4 +61,12 @@ NOISE_SENSITIVITY_PLOT = (
 
 NOISE_SENSITIVITY_DATA = (
     f"{DATA_DIR}/noise_sensitivity_study.csv"
+)
+
+MONTE_CARLO_PLOT = (
+    f"{PLOTS_DIR}/monte_carlo_histogram.png"
+)
+
+MONTE_CARLO_DATA = (
+    f"{DATA_DIR}/monte_carlo_estimation.csv"
 )

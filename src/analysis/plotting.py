@@ -96,3 +96,45 @@ def plot_noise_sensitivity(
         plt.savefig(filename)
 
     plt.show()
+
+
+def plot_monte_carlo_histogram(
+    UA_estimates,
+    UA_true,
+    filename=None
+):
+    """
+    Plot histogram of Monte Carlo UA estimates.
+    """
+
+    set_plotting_style()
+
+    plt.figure()
+
+    plt.hist(
+        UA_estimates,
+        bins=15
+    )
+
+    plt.axvline(
+        UA_true,
+        linestyle="--",
+        label=f"True UA = {UA_true:.2f}"
+    )
+
+    plt.xlabel("Estimated UA (W/K)")
+    plt.ylabel("Frequency")
+    plt.title("Monte Carlo Parameter Estimation")
+
+    plt.legend()
+
+    if filename is not None:
+
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+
+        plt.savefig(filename)
+
+    plt.show()

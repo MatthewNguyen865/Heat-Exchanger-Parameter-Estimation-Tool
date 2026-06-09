@@ -13,7 +13,7 @@ from src.core.config import (
     )
 from src.inference.parameter_estimator import estimate_UA
 from src.analysis.metrics import percent_error
-from src.utils.data_export import save_study_results
+from src.utils.data_export import save_table
 from src.core.config import NOISE_SENSITIVITY_DATA, NOISE_SENSITIVITY_PLOT
 from src.analysis.plotting import plot_noise_sensitivity
 
@@ -33,7 +33,7 @@ def run_noise_sensitivity_study():
     np.random.seed(random_seed)
 
     for noise_std in noise_levels:
-        print(f"\nRunning estimation with noise std = {noise_std} K")
+        print(f"\nRunning estimation with noise std = {noise_std} C")
         print("=" * 50)
 
         # Generate Clean Data
@@ -78,10 +78,17 @@ def run_noise_sensitivity_study():
         noise_values.append(noise_std)
         error_values.append(error)
 
-    save_study_results(
-        NOISE_SENSITIVITY_DATA,
-        results
-        )
+    save_table(
+        filename=NOISE_SENSITIVITY_DATA,
+        headers=[
+            "noise_std",
+            "UA_true",
+            "UA_est",
+            "percent_error"
+        ],
+
+        rows=results
+    )
     
     plot_noise_sensitivity(
     noise_values,

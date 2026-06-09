@@ -1,14 +1,15 @@
 import os
 import csv
 
-def save_results(
+
+def save_estimation_results(
     filename,
     UA_true,
     UA_est,
     percent_error
-    ):
+):
     """
-    Save parameter estimation results to CSV.
+    Save a single parameter estimation result.
     """
 
     os.makedirs(
@@ -36,12 +37,14 @@ def save_results(
             percent_error
         ])
 
-def save_study_results(
+
+def save_table(
     filename,
-    results
+    headers,
+    rows
 ):
     """
-    Save a parameter study to CSV.
+    Save tabular study results to CSV.
     """
 
     os.makedirs(
@@ -57,11 +60,6 @@ def save_study_results(
 
         writer = csv.writer(file)
 
-        writer.writerow([
-            "noise_std",
-            "UA_true",
-            "UA_est",
-            "percent_error"
-        ])
+        writer.writerow(headers)
 
-        writer.writerows(results)
+        writer.writerows(rows)
