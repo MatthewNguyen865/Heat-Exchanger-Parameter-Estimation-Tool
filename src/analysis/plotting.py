@@ -138,3 +138,51 @@ def plot_monte_carlo_histogram(
         plt.savefig(filename)
 
     plt.show()
+
+
+def plot_initial_guess_sensitivity(
+    initial_guesses,
+    estimated_values,
+    UA_true,
+    filename=None
+    ):
+    """
+    Plot optimizer sensitivity to initial UA guesses.
+    """
+
+    set_plotting_style()
+
+    plt.figure()
+
+    plt.plot(
+        initial_guesses,
+        estimated_values,
+        marker="o",
+        label="Estimated UA"
+    )
+
+    plt.axhline(
+        UA_true,
+        linestyle="--",
+        label=f"True UA = {UA_true:.2f} W/K"
+    )
+
+    plt.ylim(UA_true - 10, UA_true + 10)
+
+    plt.xlabel("Initial UA Guess (W/K)")
+    plt.ylabel("Estimated UA (W/K)")
+    plt.title("Initial Guess Sensitivity Study")
+
+    plt.legend()
+    plt.grid(True)
+
+    if filename is not None:
+
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+
+        plt.savefig(filename)
+
+    plt.show()

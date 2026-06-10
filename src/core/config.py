@@ -33,6 +33,18 @@ MONTE_CARLO_TRIALS = 100
 MONTE_CARLO_NOISE_STD = 1.0
 MONTE_CARLO_SEED = 42
 
+
+# Initial Guess Sensitivity Settings
+initial_guesses = [
+    50,
+    100,
+    200,
+    300,
+    500,
+    1000,
+    2000
+    ]
+
 # Estimation Settings
 UA_initial = 300.0
 
@@ -69,4 +81,12 @@ MONTE_CARLO_PLOT = (
 
 MONTE_CARLO_DATA = (
     f"{DATA_DIR}/monte_carlo_estimation.csv"
+)
+
+INITIAL_GUESS_PLOT = (
+    f"{PLOTS_DIR}/initial_guess_sensitivity_study.png"
+)
+
+INITIAL_GUESS_DATA = (
+    f"{DATA_DIR}/initial_guess_sensitivity_study.csv"
 )

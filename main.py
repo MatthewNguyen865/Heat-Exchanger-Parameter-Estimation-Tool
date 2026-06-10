@@ -1,3 +1,4 @@
+from examples.initial_guess_sensitivity_study import run_initial_guess_sensitivity_study
 from src.core.config import (
     mh,
     mc,
@@ -22,7 +23,7 @@ from examples.noise_sensitivity_study import run_noise_sensitivity_study
 from examples.monte_carlo_estimation import run_monte_carlo_estimation
 
 def main():
-    
+
     # Generate Clean Data
     time, Th_true, Tc_true = generate_clean_data(
         mh,
@@ -108,6 +109,8 @@ def main():
     run_noise_sensitivity_study()
 
     run_monte_carlo_estimation()
+
+    run_initial_guess_sensitivity_study()
 
 if __name__ == "__main__":
     main()
