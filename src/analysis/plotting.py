@@ -186,3 +186,55 @@ def plot_initial_guess_sensitivity(
         plt.savefig(filename)
 
     plt.show()
+
+
+def plot_residuals(
+    time,
+    hot_residuals,
+    cold_residuals,
+    filename=None
+    ):
+    """
+    Plot residuals versus time.
+    """
+
+    set_plotting_style()
+
+    plt.figure(figsize=(8, 5))
+
+    plt.scatter(
+        time,
+        hot_residuals,
+        label="Hot Side Residuals",
+        s=20
+    )
+    plt.scatter(
+        time,
+        cold_residuals,
+        label="Cold Side Residuals",
+        s=20
+    )
+
+    plt.axhline(
+        y=0,
+        linestyle="--",
+        linewidth=1
+    )
+
+    plt.xlabel("Time (s)")
+    plt.ylabel("Residual (°C)")
+    plt.title("Residual Analysis")
+
+    plt.legend()
+    plt.grid(True)
+
+    if filename is not None:
+
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+
+        plt.savefig(filename)
+
+    plt.show()

@@ -90,3 +90,11 @@ INITIAL_GUESS_PLOT = (
 INITIAL_GUESS_DATA = (
     f"{DATA_DIR}/initial_guess_sensitivity_study.csv"
 )
+
+RESIDUAL_ANALYSIS_PLOT = (
+    f"{PLOTS_DIR}/residual_analysis.png"
+)
+
+RESIDUAL_ANALYSIS_DATA = (
+    f"{DATA_DIR}/residual_analysis.csv"
+)

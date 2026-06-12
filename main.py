@@ -1,4 +1,5 @@
 from examples.initial_guess_sensitivity_study import run_initial_guess_sensitivity_study
+from examples.residual_analysis import run_residual_analysis
 from src.core.config import (
     mh,
     mc,
@@ -111,6 +112,8 @@ def main():
     run_monte_carlo_estimation()
 
     run_initial_guess_sensitivity_study()
+
+    run_residual_analysis()
 
 if __name__ == "__main__":
     main()
