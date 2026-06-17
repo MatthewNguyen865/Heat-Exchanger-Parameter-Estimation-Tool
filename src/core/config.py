@@ -98,3 +98,11 @@ RESIDUAL_ANALYSIS_PLOT = (
 RESIDUAL_ANALYSIS_DATA = (
     f"{DATA_DIR}/residual_analysis.csv"
 )
+
+TWO_PARAMETER_PLOT = (
+    f"{PLOTS_DIR}/two_parameter_estimation.png"
+)
+
+TWO_PARAMETER_DATA = (
+    f"{DATA_DIR}/two_parameter_estimation.csv"
+)

@@ -9,12 +9,13 @@ from src.core.config import (
     y0,
     t_span,
     t_eval,
-    random_seed
+    random_seed,
+    NOISE_SENSITIVITY_DATA,
+    NOISE_SENSITIVITY_PLOT
     )
 from src.inference.parameter_estimator import estimate_UA
 from src.analysis.metrics import percent_error
 from src.utils.data_export import save_table
-from src.core.config import NOISE_SENSITIVITY_DATA, NOISE_SENSITIVITY_PLOT
 from src.analysis.plotting import plot_noise_sensitivity
 
 def run_noise_sensitivity_study():
@@ -37,7 +38,7 @@ def run_noise_sensitivity_study():
         print("=" * 50)
 
         # Generate Clean Data
-        time, Th_true, Tc_true = generate_clean_data(
+        _, Th_true, Tc_true = generate_clean_data(
             mh,
             mc,
             Cph,

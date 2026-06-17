@@ -238,3 +238,95 @@ def plot_residuals(
         plt.savefig(filename)
 
     plt.show()
+
+def plot_two_parameter_estimation(
+    time,
+    Th_true,
+    Tc_true,
+    Th_meas,
+    Tc_meas,
+    Th_est,
+    Tc_est,
+    UA_est,
+    mh_est,
+    filename
+):
+    """
+    Plot measured, true, and estimated
+    temperature trajectories for
+    two-parameter estimation.
+    """
+    set_plotting_style()
+
+    plt.figure(figsize=(10, 6))
+
+    # True trajectories
+    plt.plot(
+        time,
+        Th_true,
+        label="True Hot Temperature"
+    )
+
+    plt.plot(
+        time,
+        Tc_true,
+        label="True Cold Temperature"
+    )
+
+    # Noisy measurements
+    plt.scatter(
+        time,
+        Th_meas,
+        s=15,
+        alpha=0.7,
+        label="Measured Hot Temperature"
+    )
+
+    plt.scatter(
+        time,
+        Tc_meas,
+        s=15,
+        alpha=0.7,
+        label="Measured Cold Temperature"
+    )
+
+    # Estimated trajectories
+    plt.plot(
+        time,
+        Th_est,
+        "--",
+        linewidth=2,
+        label="Estimated Hot Temperature"
+    )
+
+    plt.plot(
+        time,
+        Tc_est,
+        "--",
+        linewidth=2,
+        label="Estimated Cold Temperature"
+    )
+
+    plt.xlabel("Time (s)")
+    plt.ylabel("Temperature (°C)")
+
+    plt.title(
+        "Two-Parameter Estimation\n"
+        f"Estimated UA = {UA_est:.2f} W/K, "
+        f"Estimated mh = {mh_est:.2f} kg"
+    )
+
+    plt.legend()
+    plt.grid(True)
+
+    if filename is not None:
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+        plt.savefig(
+            filename,
+            bbox_inches="tight"
+        )
+
+    plt.show()
