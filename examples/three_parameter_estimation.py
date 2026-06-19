@@ -12,15 +12,15 @@ from src.core.config import (
     t_eval,
     noise_std,
     random_seed,
-    TWO_PARAMETER_PLOT,
-    TWO_PARAMETER_DATA
+    THREE_PARAMETER_PLOT,
+    THREE_PARAMETER_DATA
 )
-from src.inference.parameter_estimation_2param import estimate_UA_mh
+from src.inference.parameter_estimation_3param import estimate_UA_mh_mc
 from src.utils.data_export import save_table
-from src.analysis.plotting import plot_two_parameter_estimation
+from src.analysis.plotting import plot_three_parameter_estimation
 from src.simulation.simulator import simulate_heat_exchanger
 
-def run_two_parameter_estimation():
+def run_three_parameter_estimation():
     # Generate Clean Data
     time, Th_true, Tc_true = generate_clean_data(
         mh,
@@ -41,9 +41,8 @@ def run_two_parameter_estimation():
         random_seed=random_seed
     )
 
-    # Estimate UA and mh
-    UA_est, mh_est = estimate_UA_mh(
-        mc,
+    # Estimate UA, mh, and mc
+    UA_est, mh_est, mc_est = estimate_UA_mh_mc(
         Cph,
         Cpc,
         y0,
@@ -56,7 +55,7 @@ def run_two_parameter_estimation():
     # Simulate heat exchanger with estimated parameters
     solution_est = simulate_heat_exchanger(
         mh_est,
-        mc,
+        mc_est,
         Cph,
         Cpc,
         UA_est,
@@ -71,15 +70,25 @@ def run_two_parameter_estimation():
     # Calculate Percent Errors
     UA_error = percent_error(UA_true, UA_est)
     mh_error = percent_error(mh, mh_est)
+    mc_error = percent_error(mc, mc_est)
 
     # Save Results
-    headers = ["UA_true", "UA_est", "UA_percent_error", "mh_true", "mh_est", "mh_percent_error"]
-    rows = [(UA_true, UA_est, UA_error, mh, mh_est, mh_error)]
-    
-    save_table(filename=TWO_PARAMETER_DATA, headers=headers, rows=rows)
+    headers = [
+        "UA_true", 
+        "UA_est", 
+        "UA_percent_error", 
+        "mh_true", 
+        "mh_est", 
+        "mh_percent_error", 
+        "mc_true", 
+        "mc_est", 
+        "mc_percent_error"
+        ]
+    rows = [(UA_true, UA_est, UA_error, mh, mh_est, mh_error, mc, mc_est, mc_error)]
+    save_table(THREE_PARAMETER_DATA, headers=headers, rows=rows)
 
     # Plot Results
-    plot_two_parameter_estimation(
+    plot_three_parameter_estimation(
         time,
         Th_true,
         Tc_true,
@@ -87,22 +96,26 @@ def run_two_parameter_estimation():
         Tc_meas,
         Th_est,
         Tc_est,
-        UA_est,
-        mh_est,
-        filename=TWO_PARAMETER_PLOT
+        THREE_PARAMETER_PLOT
     )
 
-    # Print Results
-    print("Two-Parameter Estimation Results")
+    # Print Results with Statistics
+    print("\nThree-Parameter Estimation Results")
     print("=" * 50)
 
     print(f"True UA: {UA_true:.2f} W/K")
     print(f"Estimated UA: {UA_est:.2f} W/K")
     print(f"Percent Error UA: {UA_error:.2f}%")
+    print()
 
-    print(f"True mh: {mh:.2f} kg")
-    print(f"Estimated mh: {mh_est:.2f} kg")
+    print(f"True mh: {mh:.2f} kg/s")
+    print(f"Estimated mh: {mh_est:.2f} kg/s")
     print(f"Percent Error mh: {mh_error:.2f}%")
+    print()
+
+    print(f"True mc: {mc:.2f} kg/s")
+    print(f"Estimated mc: {mc_est:.2f} kg/s")
+    print(f"Percent Error mc: {mc_error:.2f}%")
 
     # SSE
     residual_hot = np.sum((Th_meas - Th_est) ** 2)
@@ -111,10 +124,32 @@ def run_two_parameter_estimation():
     print(f"SSE Hot : {residual_hot:.4f}")
     print(f"SSE Cold: {residual_cold:.4f}")
 
+    # Identifiability Diagnostics
+    print("\nIdentifiability Diagnostics")
+    print("-" * 40)
+
+    print(f"UA/mh true: {UA_true / mh:.2f}")
+    print(f"UA/mh est : {UA_est / mh_est:.2f}")
+
+    print(f"UA/mc true: {UA_true / mc:.2f}")
+    print(f"UA/mc est : {UA_est / mc_est:.2f}")
+
+    print(
+    f"Max Hot Temp Difference: "
+    f"{max(abs(Th_true - Th_est)):.6f}"
+    )
+
+    print(
+        f"Max Cold Temp Difference: "
+        f"{max(abs(Tc_true - Tc_est)):.6f}"
+    )
+
     # Return Results
     return {
         "UA_est": UA_est,
+        "UA_error": UA_error,
         "mh_est": mh_est,
-        "UA_percent_error": UA_error,
-        "mh_percent_error": mh_error
+        "mh_error": mh_error,
+        "mc_est": mc_est,
+        "mc_error": mc_error
     }

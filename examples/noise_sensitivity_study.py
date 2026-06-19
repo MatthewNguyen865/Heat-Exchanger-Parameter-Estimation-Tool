@@ -95,4 +95,10 @@ def run_noise_sensitivity_study():
     noise_values,
     error_values,
     filename=NOISE_SENSITIVITY_PLOT
-)
+    )
+
+    # Return Results
+    return {
+        "noise_levels": noise_values,
+        "percent_errors": error_values
+    }

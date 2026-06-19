@@ -67,6 +67,7 @@ def run_initial_guess_sensitivity_study():
     # Plot results
     plot_initial_guess_sensitivity(initial_guesses, estimates, UA_true, INITIAL_GUESS_PLOT)
 
+    # Print Results
     print("\nInitial Guess Sensitivity Study Results")
     print("-" * 40)
     print(f"Number of Initial Guesses Tested: {len(initial_guesses)}")
@@ -79,3 +80,11 @@ def run_initial_guess_sensitivity_study():
         f"{estimate_range:.4f} W/K"
     )
     print(f"Average Percent Error: {np.mean(errors):.4f}%")
+
+    # Return Results
+    return {
+        "Minimum Estimated UA": min(estimates),
+        "Maximum Estimated UA": max(estimates),
+        "Estimate Range": estimate_range,
+        "Average Percent Error": np.mean(errors)
+    }

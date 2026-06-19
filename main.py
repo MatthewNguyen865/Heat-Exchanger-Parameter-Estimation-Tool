@@ -1,3 +1,4 @@
+import numpy as np
 from examples.initial_guess_sensitivity_study import run_initial_guess_sensitivity_study
 from examples.residual_analysis import run_residual_analysis
 from examples.two_parameter_estimation import run_two_parameter_estimation
@@ -24,6 +25,7 @@ from src.utils.data_export import save_estimation_results
 from examples.noise_sensitivity_study import run_noise_sensitivity_study
 from examples.monte_carlo_estimation import run_monte_carlo_estimation
 from examples.parameter_correlation_study import run_parameter_correlation_study
+from examples.three_parameter_estimation import run_three_parameter_estimation
 
 def main():
 
@@ -88,6 +90,7 @@ def main():
         UA_est
     )
 
+    # Save Results
     save_estimation_results(
         filename=ESTIMATION_DATA,
         UA_true=UA_true,
@@ -96,6 +99,13 @@ def main():
     )
 
     print(f"Percent Error: {error:.2f}%")
+
+    # SSE
+    residual_hot = np.sum((Th_meas - Th_est) ** 2)
+    residual_cold = np.sum((Tc_meas - Tc_est) ** 2)
+
+    print(f"SSE Hot : {residual_hot:.4f}")
+    print(f"SSE Cold: {residual_cold:.4f}")
 
     # Plot Results
     plot_estimation_results(
@@ -108,7 +118,7 @@ def main():
         Tc_est,
         filename=ESTIMATION_PLOT
     )
-
+    """
     run_noise_sensitivity_study()
 
     run_monte_carlo_estimation()
@@ -116,10 +126,12 @@ def main():
     run_initial_guess_sensitivity_study()
 
     run_residual_analysis()
-
+    """
     run_two_parameter_estimation()
-
+    """
     run_parameter_correlation_study()
+    """
+    run_three_parameter_estimation()
 
 if __name__ == "__main__":
     main()

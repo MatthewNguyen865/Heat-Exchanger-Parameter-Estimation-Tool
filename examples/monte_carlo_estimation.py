@@ -78,6 +78,7 @@ def run_monte_carlo_estimation():
 
     mean_error = abs((mean_UA - UA_true) / UA_true) * 100
 
+    # Print Results
     print("\nMonte Carlo Estimation Results:")
     print(f"Mean UA Estimate: {mean_UA:.2f} W/K")
     print(f"Standard Deviation: {std_UA:.2f} W/K")
@@ -94,10 +95,10 @@ def run_monte_carlo_estimation():
 
     # Return results for further analysis if needed
     return {
-    "mean": mean_UA,
-    "std": std_UA,
-    "min": min_UA,
-    "max": max_UA,
-    "mean_error": mean_error,
-    "estimates": UA_estimates
+        "mean": mean_UA,
+        "std": std_UA,
+        "min": min_UA,
+        "max": max_UA,
+        "mean_error": mean_error,
+        "estimates": UA_estimates
     }

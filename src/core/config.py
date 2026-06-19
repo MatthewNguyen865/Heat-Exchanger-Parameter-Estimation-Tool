@@ -56,6 +56,12 @@ UA_initial = 300.0
 UA_lower_bound = 1.0
 UA_upper_bound = 5000.0
 
+# Three-Parameter Estimation Settings
+
+UA_initial_3param = 300.0
+mh_initial_3param = 8.0
+mc_initial_3param = 8.0
+
 # Output Directories
 PLOTS_DIR = "results/plots"
 DATA_DIR = "results/data"
@@ -118,4 +124,12 @@ CORRELATION_PLOT = (
 
 CORRELATION_DATA = (
     f"{DATA_DIR}/parameter_correlation_study.csv"
+)
+
+THREE_PARAMETER_PLOT = (
+    f"{PLOTS_DIR}/three_parameter_estimation.png"
+)
+
+THREE_PARAMETER_DATA = (
+    f"{DATA_DIR}/three_parameter_estimation.csv"
 )

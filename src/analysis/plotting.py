@@ -369,3 +369,79 @@ def plot_parameter_correlation(
         plt.savefig(filename)
 
     plt.show()
+
+def plot_three_parameter_estimation(
+    time,
+    Th_true,
+    Tc_true,
+    Th_meas,
+    Tc_meas,
+    Th_est,
+    Tc_est,
+    filename=None
+):
+    """
+    Plot three-parameter estimation results.
+    """
+
+    set_plotting_style()
+
+    plt.figure(figsize=(8, 5))
+
+    plt.plot(
+        time,
+        Th_true,
+        label="True Hot Temperature"
+    )
+
+    plt.plot(
+        time,
+        Tc_true,
+        label="True Cold Temperature"
+    )
+
+    plt.scatter(
+        time,
+        Th_meas,
+        s=20,
+        label="Measured Hot Temperature"
+    )
+
+    plt.scatter(
+        time,
+        Tc_meas,
+        s=20,
+        label="Measured Cold Temperature"
+    )
+
+    plt.plot(
+        time,
+        Th_est,
+        linestyle="--",
+        label="Estimated Hot Temperature"
+    )
+
+    plt.plot(
+        time,
+        Tc_est,
+        linestyle="--",
+        label="Estimated Cold Temperature"
+    )
+
+    plt.xlabel("Time (s)")
+    plt.ylabel("Temperature (°C)")
+    plt.title("Three-Parameter Estimation")
+
+    plt.legend()
+    plt.grid(True)
+
+    if filename is not None:
+
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+
+        plt.savefig(filename)
+
+    plt.show()

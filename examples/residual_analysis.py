@@ -78,6 +78,7 @@ def run_residual_analysis():
     hot_rmse = rmse(Th_meas, Th_est)
     cold_rmse = rmse(Tc_meas, Tc_est)
 
+    # Print Results
     print("\nResidual Analysis Results")
     print("=" * 35)
     print(f"Hot-Side RMSE : {hot_rmse:.4f} °C")
@@ -98,6 +99,7 @@ def run_residual_analysis():
         f"Maximum Absolute Cold Residual : "
         f"{np.max(np.abs(cold_residuals)):.4f} °C"
     )
+    print()
 
     # Save results
     headers = ["time", "hot_residual", "cold_residual"]
@@ -106,3 +108,11 @@ def run_residual_analysis():
 
     # Plot residuals
     plot_residuals(time, hot_residuals, cold_residuals, RESIDUAL_ANALYSIS_PLOT)
+
+    # Return Results
+    return {
+        "hot_residuals": hot_residuals,
+        "cold_residuals": cold_residuals,
+        "hot_rmse": hot_rmse,
+        "cold_rmse": cold_rmse
+    }
