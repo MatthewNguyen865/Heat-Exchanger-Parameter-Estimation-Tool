@@ -71,6 +71,14 @@ def run_two_parameter_estimation():
     UA_error = percent_error(UA_true, UA_est)
     mh_error = percent_error(mh, mh_est)
 
+    # Return Results
+    return {
+        "UA_est": UA_est,
+        "mh_est": mh_est,
+        "UA_percent_error": UA_error,
+        "mh_percent_error": mh_error
+    }
+
     # Save Results
     headers = ["UA_true", "UA_est", "UA_percent_error", "mh_true", "mh_est", "mh_percent_error"]
     rows = [(UA_true, UA_est, UA_error, mh, mh_est, mh_error)]

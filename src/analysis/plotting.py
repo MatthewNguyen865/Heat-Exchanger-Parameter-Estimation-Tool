@@ -250,7 +250,7 @@ def plot_two_parameter_estimation(
     UA_est,
     mh_est,
     filename
-):
+    ):
     """
     Plot measured, true, and estimated
     temperature trajectories for
@@ -324,9 +324,48 @@ def plot_two_parameter_estimation(
             os.path.dirname(filename),
             exist_ok=True
         )
-        plt.savefig(
-            filename,
-            bbox_inches="tight"
+        
+        plt.savefig(filename)
+
+    plt.show()
+
+def plot_parameter_correlation(
+    UA_estimates,
+    mh_estimates,
+    correlation,
+    filename=None
+    ):
+    """
+    Plot estimated UA versus estimated mh.
+    """
+
+    set_plotting_style()
+
+    plt.figure(figsize=(8, 5))
+
+    plt.scatter(
+        UA_estimates,
+        mh_estimates,
+        s=20
+    )
+
+    plt.xlabel("Estimated UA (W/K)")
+    plt.ylabel("Estimated mh (kg)")
+
+    plt.title(
+        "Parameter Correlation Study\n"
+        f"Correlation = {correlation:.3f}"
+    )
+
+    plt.grid(True)
+
+    if filename is not None:
+
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
         )
+
+        plt.savefig(filename)
 
     plt.show()

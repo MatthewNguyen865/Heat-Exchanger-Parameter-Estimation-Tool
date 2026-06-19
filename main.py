@@ -23,6 +23,7 @@ from src.analysis.metrics import percent_error
 from src.utils.data_export import save_estimation_results
 from examples.noise_sensitivity_study import run_noise_sensitivity_study
 from examples.monte_carlo_estimation import run_monte_carlo_estimation
+from examples.parameter_correlation_study import run_parameter_correlation_study
 
 def main():
 
@@ -117,6 +118,8 @@ def main():
     run_residual_analysis()
 
     run_two_parameter_estimation()
+
+    run_parameter_correlation_study()
 
 if __name__ == "__main__":
     main()

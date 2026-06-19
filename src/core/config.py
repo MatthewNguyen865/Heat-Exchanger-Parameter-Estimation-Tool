@@ -45,6 +45,11 @@ initial_guesses = [
     2000
     ]
 
+# Parameter Correlation Study Settings
+CORRELATION_TRIALS = 100
+CORRELATION_NOISE_STD = 1.0
+CORRELATION_SEED = 42
+
 # Estimation Settings
 UA_initial = 300.0
 
@@ -105,4 +110,12 @@ TWO_PARAMETER_PLOT = (
 
 TWO_PARAMETER_DATA = (
     f"{DATA_DIR}/two_parameter_estimation.csv"
+)
+
+CORRELATION_PLOT = (
+    f"{PLOTS_DIR}/parameter_correlation_study.png"
+)
+
+CORRELATION_DATA = (
+    f"{DATA_DIR}/parameter_correlation_study.csv"
 )
