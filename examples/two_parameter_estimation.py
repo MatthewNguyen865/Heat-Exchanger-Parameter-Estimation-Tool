@@ -93,7 +93,7 @@ def run_two_parameter_estimation():
     )
 
     # Print Results
-    print("Two-Parameter Estimation Results")
+    print("\nTwo-Parameter Estimation Results")
     print("=" * 50)
 
     print(f"True UA: {UA_true:.2f} W/K")
@@ -116,5 +116,8 @@ def run_two_parameter_estimation():
         "UA_est": UA_est,
         "mh_est": mh_est,
         "UA_percent_error": UA_error,
-        "mh_percent_error": mh_error
+        "mh_percent_error": mh_error,
+        "SSE_hot": residual_hot,
+        "SSE_cold": residual_cold,
+        "SSE_total": residual_hot + residual_cold
     }

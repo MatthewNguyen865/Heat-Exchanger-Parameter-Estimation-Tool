@@ -99,7 +99,6 @@ def run_residual_analysis():
         f"Maximum Absolute Cold Residual : "
         f"{np.max(np.abs(cold_residuals)):.4f} °C"
     )
-    print()
 
     # Save results
     headers = ["time", "hot_residual", "cold_residual"]

@@ -151,5 +151,8 @@ def run_three_parameter_estimation():
         "mh_est": mh_est,
         "mh_error": mh_error,
         "mc_est": mc_est,
-        "mc_error": mc_error
+        "mc_error": mc_error,
+        "SSE_hot": residual_hot,
+        "SSE_cold": residual_cold,
+        "SSE_total": residual_hot + residual_cold
     }

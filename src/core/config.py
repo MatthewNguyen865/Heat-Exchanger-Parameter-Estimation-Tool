@@ -133,3 +133,11 @@ THREE_PARAMETER_PLOT = (
 THREE_PARAMETER_DATA = (
     f"{DATA_DIR}/three_parameter_estimation.csv"
 )
+
+MODEL_COMPARISON_PLOT = (
+    f"{PLOTS_DIR}/model_comparison.png"
+)
+
+MODEL_COMPARISON_DATA = (
+    f"{DATA_DIR}/model_comparison.csv"
+)

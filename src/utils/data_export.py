@@ -1,48 +1,11 @@
 import os
 import csv
 
-
-def save_estimation_results(
-    filename,
-    UA_true,
-    UA_est,
-    percent_error
-):
-    """
-    Save a single parameter estimation result.
-    """
-
-    os.makedirs(
-        os.path.dirname(filename),
-        exist_ok=True
-    )
-
-    with open(
-        filename,
-        mode="w",
-        newline=""
-    ) as file:
-
-        writer = csv.writer(file)
-
-        writer.writerow([
-            "UA_true",
-            "UA_est",
-            "percent_error"
-        ])
-
-        writer.writerow([
-            UA_true,
-            UA_est,
-            percent_error
-        ])
-
-
 def save_table(
     filename,
     headers,
     rows
-):
+    ):
     """
     Save tabular study results to CSV.
     """

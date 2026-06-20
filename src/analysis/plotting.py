@@ -445,3 +445,44 @@ def plot_three_parameter_estimation(
         plt.savefig(filename)
 
     plt.show()
+
+def plot_model_comparison(
+    model_names,
+    total_sse,
+    filename=None
+):
+    """
+    Plot total SSE for each estimation model.
+    """
+
+    set_plotting_style()
+
+    plt.figure(figsize=(8, 5))
+
+    plt.bar(
+        model_names,
+        total_sse
+    )
+
+    plt.ylabel("Total SSE (°C²)")
+    plt.xlabel("Estimation Model")
+    plt.title("Model Comparison Study")
+
+    plt.grid(
+        True,
+        axis="y"
+    )
+
+    if filename is not None:
+
+        os.makedirs(
+            os.path.dirname(filename),
+            exist_ok=True
+        )
+
+        plt.savefig(
+            filename,
+            bbox_inches="tight"
+        )
+
+    plt.show()
