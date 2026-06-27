@@ -1,29 +1,28 @@
-from examples.one_parameter_estimation import run_one_parameter_estimation
-from examples.initial_guess_sensitivity_study import run_initial_guess_sensitivity_study
-from examples.residual_analysis import run_residual_analysis
-from examples.two_parameter_estimation import run_two_parameter_estimation
-from examples.noise_sensitivity_study import run_noise_sensitivity_study
-from examples.monte_carlo_estimation import run_monte_carlo_estimation
-from examples.parameter_correlation_study import run_parameter_correlation_study
-from examples.three_parameter_estimation import run_three_parameter_estimation
+import argparse
+from src.experiment_runner import run_experiment
 
 def main():
 
-    run_one_parameter_estimation()
-    
-    run_noise_sensitivity_study()
+    parser = argparse.ArgumentParser(
+        description=(
+            "Heat Exchanger Parameter "
+            "Estimation Framework"
+        )
+    )
 
-    run_monte_carlo_estimation()
+    parser.add_argument(
+        "experiment",
+        type=str,
+        help=(
+            "Experiment to run"
+        )
+    )
 
-    run_initial_guess_sensitivity_study()
+    args = parser.parse_args()
 
-    run_residual_analysis()
-    
-    run_two_parameter_estimation()
-    
-    run_parameter_correlation_study()
-    
-    run_three_parameter_estimation()
+    run_experiment(
+        args.experiment
+    )
 
 if __name__ == "__main__":
     main()
