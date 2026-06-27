@@ -21,7 +21,7 @@ from src.analysis.plotting import plot_estimation_results
 from src.analysis.metrics import percent_error
 from src.utils.data_export import save_table
 
-def run_one_parameter_estimation():
+def run_one_parameter_estimation(save_results=True, create_plots=True, print_results=True):
     # Generate Clean Data
     time, Th_true, Tc_true = generate_clean_data(
         mh,
@@ -71,46 +71,50 @@ def run_one_parameter_estimation():
     Th_est = solution_est.y[0]
     Tc_est = solution_est.y[1]
 
-    # Results
-    print("\nParameter Estimation Results")
-    print("-" * 35)
-
-    print(f"True UA      : {UA_true:.2f} W/K")
-    print(f"Estimated UA : {UA_est:.2f} W/K")
-
     error = percent_error(
         UA_true,
         UA_est
     )
-    print(f"Percent Error: {error:.2f}%")
-
-    # Save Results
-    headers = ["UA_true", "UA_est", "Percent_error"]
-    rows = [(UA_true, UA_est, error)]
-    save_table(filename=ESTIMATION_DATA, headers=headers, rows=rows)
 
     # SSE
     residual_hot = np.sum((Th_meas - Th_est) ** 2)
     residual_cold = np.sum((Tc_meas - Tc_est) ** 2)
 
-    print(f"SSE Hot : {residual_hot:.4f}")
-    print(f"SSE Cold: {residual_cold:.4f}")
+    # Results
+    if print_results:
+        print("\nParameter Estimation Results")
+        print("-" * 35)
+
+        print(f"True UA      : {UA_true:.2f} W/K")
+        print(f"Estimated UA : {UA_est:.2f} W/K")
+
+        print(f"Percent Error: {error:.2f}%")
+
+        print(f"SSE Hot : {residual_hot:.4f}")
+        print(f"SSE Cold: {residual_cold:.4f}")
+
+    # Save Results
+    headers = ["UA_true", "UA_est", "Percent_error"]
+    rows = [(UA_true, UA_est, error)]
+    if save_results:
+        save_table(filename=ESTIMATION_DATA, headers=headers, rows=rows)
 
     # Plot Results
-    plot_estimation_results(
-        time,
-        Th_true,
-        Tc_true,
-        Th_meas,
-        Tc_meas,
-        Th_est,
-        Tc_est,
-        filename=ESTIMATION_PLOT
-    )
+    if create_plots:
+        plot_estimation_results(
+            time,
+            Th_true,
+            Tc_true,
+            Th_meas,
+            Tc_meas,
+            Th_est,
+            Tc_est,
+            filename=ESTIMATION_PLOT
+        )
 
     # Return Results
     return {
-        "UA_True": UA_true,
+        "UA_true": UA_true,
         "UA_est": UA_est,
         "SSE_hot": residual_hot,
         "SSE_cold": residual_cold,

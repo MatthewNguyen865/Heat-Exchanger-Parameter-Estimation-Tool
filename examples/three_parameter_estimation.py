@@ -20,7 +20,7 @@ from src.utils.data_export import save_table
 from src.analysis.plotting import plot_three_parameter_estimation
 from src.simulation.simulator import simulate_heat_exchanger
 
-def run_three_parameter_estimation():
+def run_three_parameter_estimation(save_results=True, create_plots=True, print_results=True):
     # Generate Clean Data
     time, Th_true, Tc_true = generate_clean_data(
         mh,
@@ -85,64 +85,67 @@ def run_three_parameter_estimation():
         "mc_percent_error"
         ]
     rows = [(UA_true, UA_est, UA_error, mh, mh_est, mh_error, mc, mc_est, mc_error)]
-    save_table(THREE_PARAMETER_DATA, headers=headers, rows=rows)
+    if save_results:
+        save_table(THREE_PARAMETER_DATA, headers=headers, rows=rows)
 
     # Plot Results
-    plot_three_parameter_estimation(
-        time,
-        Th_true,
-        Tc_true,
-        Th_meas,
-        Tc_meas,
-        Th_est,
-        Tc_est,
-        THREE_PARAMETER_PLOT
-    )
-
-    # Print Results with Statistics
-    print("\nThree-Parameter Estimation Results")
-    print("=" * 50)
-
-    print(f"True UA: {UA_true:.2f} W/K")
-    print(f"Estimated UA: {UA_est:.2f} W/K")
-    print(f"Percent Error UA: {UA_error:.2f}%")
-    print()
-
-    print(f"True mh: {mh:.2f} kg/s")
-    print(f"Estimated mh: {mh_est:.2f} kg/s")
-    print(f"Percent Error mh: {mh_error:.2f}%")
-    print()
-
-    print(f"True mc: {mc:.2f} kg/s")
-    print(f"Estimated mc: {mc_est:.2f} kg/s")
-    print(f"Percent Error mc: {mc_error:.2f}%")
+    if create_plots:
+        plot_three_parameter_estimation(
+            time,
+            Th_true,
+            Tc_true,
+            Th_meas,
+            Tc_meas,
+            Th_est,
+            Tc_est,
+            THREE_PARAMETER_PLOT
+        )
 
     # SSE
     residual_hot = np.sum((Th_meas - Th_est) ** 2)
     residual_cold = np.sum((Tc_meas - Tc_est) ** 2)
 
-    print(f"SSE Hot : {residual_hot:.4f}")
-    print(f"SSE Cold: {residual_cold:.4f}")
+    # Print Results with Statistics
+    if print_results:
+        print("\nThree-Parameter Estimation Results")
+        print("=" * 50)
 
-    # Identifiability Diagnostics
-    print("\nIdentifiability Diagnostics")
-    print("-" * 40)
+        print(f"True UA: {UA_true:.2f} W/K")
+        print(f"Estimated UA: {UA_est:.2f} W/K")
+        print(f"Percent Error UA: {UA_error:.2f}%")
+        print()
 
-    print(f"UA/mh true: {UA_true / mh:.2f}")
-    print(f"UA/mh est : {UA_est / mh_est:.2f}")
+        print(f"True mh: {mh:.2f} kg/s")
+        print(f"Estimated mh: {mh_est:.2f} kg/s")
+        print(f"Percent Error mh: {mh_error:.2f}%")
+        print()
 
-    print(f"UA/mc true: {UA_true / mc:.2f}")
-    print(f"UA/mc est : {UA_est / mc_est:.2f}")
+        print(f"True mc: {mc:.2f} kg/s")
+        print(f"Estimated mc: {mc_est:.2f} kg/s")
+        print(f"Percent Error mc: {mc_error:.2f}%")
 
-    print(
-    f"Max Hot Temp Difference: "
-    f"{max(abs(Th_true - Th_est)):.6f}"
-    )
+        print(f"SSE Hot : {residual_hot:.4f}")
+        print(f"SSE Cold: {residual_cold:.4f}")
 
-    print(
-        f"Max Cold Temp Difference: "
-        f"{max(abs(Tc_true - Tc_est)):.6f}"
-    )
+        # Identifiability Diagnostics
+        print("\nIdentifiability Diagnostics")
+        print("-" * 40)
+
+        print(f"UA/mh true: {UA_true / mh:.2f}")
+        print(f"UA/mh est : {UA_est / mh_est:.2f}")
+
+        print(f"UA/mc true: {UA_true / mc:.2f}")
+        print(f"UA/mc est : {UA_est / mc_est:.2f}")
+
+        print(
+            f"Max Hot Temp Difference: "
+            f"{max(abs(Th_true - Th_est)):.6f}"
+        )
+
+        print(
+            f"Max Cold Temp Difference: "
+            f"{max(abs(Tc_true - Tc_est)):.6f}"
+        )
 
     # Return Results
     return {

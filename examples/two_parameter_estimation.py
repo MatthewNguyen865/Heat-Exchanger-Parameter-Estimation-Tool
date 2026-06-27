@@ -20,7 +20,7 @@ from src.utils.data_export import save_table
 from src.analysis.plotting import plot_two_parameter_estimation
 from src.simulation.simulator import simulate_heat_exchanger
 
-def run_two_parameter_estimation():
+def run_two_parameter_estimation(save_results=True, create_plots=True, print_results=True):
     # Generate Clean Data
     time, Th_true, Tc_true = generate_clean_data(
         mh,
@@ -75,41 +75,43 @@ def run_two_parameter_estimation():
     # Save Results
     headers = ["UA_true", "UA_est", "UA_percent_error", "mh_true", "mh_est", "mh_percent_error"]
     rows = [(UA_true, UA_est, UA_error, mh, mh_est, mh_error)]
-    
-    save_table(filename=TWO_PARAMETER_DATA, headers=headers, rows=rows)
+    if save_results:
+        save_table(filename=TWO_PARAMETER_DATA, headers=headers, rows=rows)
 
     # Plot Results
-    plot_two_parameter_estimation(
-        time,
-        Th_true,
-        Tc_true,
-        Th_meas,
-        Tc_meas,
-        Th_est,
-        Tc_est,
-        UA_est,
-        mh_est,
-        filename=TWO_PARAMETER_PLOT
-    )
-
-    # Print Results
-    print("\nTwo-Parameter Estimation Results")
-    print("=" * 50)
-
-    print(f"True UA: {UA_true:.2f} W/K")
-    print(f"Estimated UA: {UA_est:.2f} W/K")
-    print(f"Percent Error UA: {UA_error:.2f}%")
-
-    print(f"True mh: {mh:.2f} kg")
-    print(f"Estimated mh: {mh_est:.2f} kg")
-    print(f"Percent Error mh: {mh_error:.2f}%")
-
+    if create_plots:
+        plot_two_parameter_estimation(
+            time,
+            Th_true,
+            Tc_true,
+            Th_meas,
+            Tc_meas,
+            Th_est,
+            Tc_est,
+            UA_est,
+            mh_est,
+            filename=TWO_PARAMETER_PLOT
+        )
+    
     # SSE
     residual_hot = np.sum((Th_meas - Th_est) ** 2)
     residual_cold = np.sum((Tc_meas - Tc_est) ** 2)
 
-    print(f"SSE Hot : {residual_hot:.4f}")
-    print(f"SSE Cold: {residual_cold:.4f}")
+    # Print Results
+    if print_results:
+        print("\nTwo-Parameter Estimation Results")
+        print("=" * 50)
+
+        print(f"True UA: {UA_true:.2f} W/K")
+        print(f"Estimated UA: {UA_est:.2f} W/K")
+        print(f"Percent Error UA: {UA_error:.2f}%")
+
+        print(f"True mh: {mh:.2f} kg")
+        print(f"Estimated mh: {mh_est:.2f} kg")
+        print(f"Percent Error mh: {mh_error:.2f}%")
+
+        print(f"SSE Hot : {residual_hot:.4f}")
+        print(f"SSE Cold: {residual_cold:.4f}")
 
     # Return Results
     return {
